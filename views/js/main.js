@@ -408,13 +408,13 @@ var resizePizzas = function(size) {
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        document.getElementById("pizzaSize").innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        document.getElementById("pizzaSize").innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        document.getElementById("pizzaSize").innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -426,7 +426,7 @@ var resizePizzas = function(size) {
    // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
   function determineDx (elem, size) {
     var oldWidth = elem.offsetWidth;
-    var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
+    var windowWidth = document.getElementById("randomPizzas").offsetWidth;
     var oldSize = oldWidth / windowWidth;
 
     // Changes the slider value to a percent width
@@ -449,6 +449,7 @@ var resizePizzas = function(size) {
     return dx;
   }
 
+    //pulled out of loop for efficiency
       var dx = determineDx(document.getElementsByClassName("randomPizzaContainer")[i], size);
       var newwidth = (document.getElementsByClassName("randomPizzaContainer")[i].offsetWidth + dx) + 'px';
 
@@ -518,8 +519,6 @@ function updatePositions() {
   for (var i = 0; i < items.length; i++) {
     var phases =  Math.sin(scrollTopDefined + (i % 5));
 
-    // console.log(phase,document.body.scrollTop/ 1250);
-
     items[i].style.left = items[i].basicLeft + 100 * phases + 'px';
   }
 
@@ -540,16 +539,23 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
+
+  var screenHeight = window.screen.height;
+  var rows = (Math.ceil(screenHeight/100));
+  var totalPizzas = rows * cols;
+
+  var elem;
+  var movingPizzas1 = document.getElementById("movingPizzas1")
 // lowered the number of pizzas generated in order to increase load time, only a few actually visible at a time
-  for (var i = 0; i < 25; i++) {
-    var elem = document.createElement('img');
+  for (var i = 0; i < totalPizzas; i++) {
+    elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    movingPizzas1.appendChild(elem);
   }
   updatePositions();
 });
