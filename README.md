@@ -1,4 +1,5 @@
 I used different methods in order to speed up the load time of this website.
+
 -Inline CSS
 -Inline some of the script
 -Created global variables for loops so the page wouldnt have to reload the style or layout through each loop
@@ -8,3 +9,4 @@ I used different methods in order to speed up the load time of this website.
 -fixed the janky pizzas with the scroll event
 
 open index.html in your browser!
+
